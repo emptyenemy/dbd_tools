@@ -3,6 +3,7 @@ for /f "delims=" %%i in ('python -c "from modules.config import VERSION; print(V
 
 python -m nuitka ^
   --mode=onefile ^
+  --clang ^
   --assume-yes-for-downloads ^
   --windows-icon-from-ico=icon.ico ^
   --windows-uac-admin ^
