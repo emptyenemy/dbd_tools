@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt nuitka
+
+      - name: Cache Nuitka
+        uses: actions/cache@v4
+        with:
+          path: ~\AppData\Local\Nuitka\Nuitka\Cache
+          key: nuitka-${{ runner.os }}-${{ hashFiles('main.py', 'modules/**/*.py') }}
+          restore-keys: nuitka-${{ runner.os }}-
+
+      - name: Build
+        run: build.bat
+        shell: cmd
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/Dead by Daylight Tools.exe
+          generate_release_notes: true
+          fail_on_unmatched_files: true

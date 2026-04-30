@@ -1,5 +1,6 @@
 python -m nuitka ^
   --mode=onefile ^
+  --assume-yes-for-downloads ^
   --windows-icon-from-ico=icon.ico ^
   --windows-uac-admin ^
   --output-dir=build ^
