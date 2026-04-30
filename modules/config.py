@@ -5,6 +5,8 @@ AWS_IP_RANGES_URL = "https://ip-ranges.amazonaws.com/ip-ranges.json"
 HOSTS_PATH = Path(r"C:\Windows\System32\drivers\etc\hosts")
 HOSTS_BLOCK_IP = "0.0.0.0"
 
+VERSION = "1.0.0"
+
 PING_INTERVAL_SECONDS = 1.0
 TCP_PING_TIMEOUT = 2.0
 GAME_PORT_MIN = 7777
@@ -26,4 +28,4 @@ BANNER_LINES = [
     "  | | (_) | (_) | \\__ \\",
     "  |_|\\___/ \\___/|_|___/",
 ]
-TAGLINE = "v1.00 by @emptyenemy"
+TAGLINE = f"v{VERSION} by @emptyenemy"
