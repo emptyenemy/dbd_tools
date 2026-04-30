@@ -33,11 +33,11 @@ def read_key() -> str | None:
 def move_selection(delta: int) -> None:
     with state.state_lock:
         current = state.selected_code
-    if current not in display_order:
-        state.selected_code = display_order[0]
-        return
-    idx = display_order.index(current)
-    state.selected_code = display_order[(idx + delta) % len(display_order)]
+        if current not in display_order:
+            state.selected_code = display_order[0]
+            return
+        idx = display_order.index(current)
+        state.selected_code = display_order[(idx + delta) % len(display_order)]
 
 
 def block_selected() -> None:

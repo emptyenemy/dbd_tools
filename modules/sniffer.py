@@ -1,3 +1,4 @@
+import contextlib
 import socket
 import struct
 import threading
@@ -96,14 +97,10 @@ class TrafficSniffer:
         self._stop.set()
         sock = self._socket
         if sock is not None:
-            try:
+            with contextlib.suppress(Exception):
                 sock.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
-            except Exception:
-                pass
-            try:
+            with contextlib.suppress(Exception):
                 sock.close()
-            except Exception:
-                pass
         if self._thread is not None:
             self._thread.join(timeout=0.2)
 
@@ -138,13 +135,16 @@ def server_watchdog_loop() -> None:
         time.sleep(0.5)
         now = time.time()
         with state.state_lock:
-            if state.current_server.ip and state.current_server.last_seen:
-                if now - state.current_server.last_seen > SERVER_STALE_SECONDS:
-                    state.current_server.ip = None
-                    state.current_server.port = None
-                    state.current_server.region_code = None
-                    state.current_server.region_name = None
-                    state.current_server.last_seen = None
+            if (
+                state.current_server.ip
+                and state.current_server.last_seen
+                and now - state.current_server.last_seen > SERVER_STALE_SECONDS
+            ):
+                state.current_server.ip = None
+                state.current_server.port = None
+                state.current_server.region_code = None
+                state.current_server.region_name = None
+                state.current_server.last_seen = None
 
 
 def ensure_sniffer() -> None:
@@ -164,10 +164,8 @@ def ensure_sniffer() -> None:
             return
 
         if state.traffic_sniffer is not None:
-            try:
+            with contextlib.suppress(Exception):
                 state.traffic_sniffer.stop()
-            except Exception:
-                pass
             state.traffic_sniffer = None
             with state.state_lock:
                 state.current_server.listening_ip = None

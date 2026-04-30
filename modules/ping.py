@@ -1,6 +1,6 @@
 import socket
 import time
-from concurrent.futures import Executor, ThreadPoolExecutor, as_completed
+from concurrent.futures import Executor, as_completed
 
 from . import state
 from .config import PING_INTERVAL_SECONDS, TCP_PING_TIMEOUT

@@ -83,10 +83,7 @@ def build_frame() -> Group:
         name_style = "bold blue" if is_selected else ""
         name = Text(region.name, style=name_style)
         ping_text = Text("💀", style="bold red") if ping is None else Text(f"{ping}ms", style=ping_style(ping))
-        if blocked:
-            tag = Text("[заблокирован]", style="bold red")
-        else:
-            tag = Text("[не заблокирован]", style="bold green")
+        tag = Text("[заблокирован]", style="bold red") if blocked else Text("[не заблокирован]", style="bold green")
         table.add_row(marker, name, ping_text, tag)
 
     footer = Text(

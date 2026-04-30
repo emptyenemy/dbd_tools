@@ -1,3 +1,4 @@
+import contextlib
 import subprocess
 
 from .config import HOSTS_BLOCK_IP, HOSTS_PATH
@@ -49,16 +50,13 @@ def find_hosts_entries(hostnames: list[str], lines: list[str]) -> list[tuple[int
 
 def is_region_blocked(region: RegionInfo, lines: list[str]) -> bool:
     return any(
-        not is_commented and ip == HOSTS_BLOCK_IP
-        for _, is_commented, ip in find_hosts_entries(region.hosts, lines)
+        not is_commented and ip == HOSTS_BLOCK_IP for _, is_commented, ip in find_hosts_entries(region.hosts, lines)
     )
 
 
 def flush_dns() -> None:
-    try:
+    with contextlib.suppress(Exception):
         subprocess.run(["ipconfig", "/flushdns"], capture_output=True, timeout=5)
-    except Exception:
-        pass
 
 
 def block_region_hosts(region: RegionInfo) -> None:

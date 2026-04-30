@@ -8,6 +8,7 @@ class RegionInfo:
     hosts: list[str]
 
 
+# fmt: off
 REGIONS: list[RegionInfo] = [
     RegionInfo("Asia Pacific (Hong Kong)", "ap-east-1", ["ec2.ap-east-1.amazonaws.com", "gamelift-ping.ap-east-1.api.aws"]),
     RegionInfo("Asia Pacific (Mumbai)", "ap-south-1", ["gamelift.ap-south-1.amazonaws.com", "gamelift-ping.ap-south-1.api.aws"]),
@@ -25,6 +26,7 @@ REGIONS: list[RegionInfo] = [
     RegionInfo("US West (N. California)", "us-west-1", ["gamelift.us-west-1.amazonaws.com", "gamelift-ping.us-west-1.api.aws"]),
     RegionInfo("US West (Oregon)", "us-west-2", ["gamelift.us-west-2.amazonaws.com", "gamelift-ping.us-west-2.api.aws"]),
 ]
+# fmt: on
 
 regions_by_code: dict[str, RegionInfo] = {r.code: r for r in REGIONS}
 display_order: list[str] = [r.code for r in REGIONS]

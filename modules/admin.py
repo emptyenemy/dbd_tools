@@ -13,6 +13,4 @@ def is_admin() -> bool:
 
 def relaunch_as_admin() -> int:
     params = subprocess.list2cmdline(sys.argv)
-    return ctypes.windll.shell32.ShellExecuteW(
-        None, "runas", sys.executable, params, os.getcwd(), 1
-    )
+    return ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, params, os.getcwd(), 1)

@@ -1,0 +1,12 @@
+target-version = "py313"
+line-length = 120
+extend-exclude = ["build"]
+
+[lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[lint.per-file-ignores]
+"modules/regions.py" = ["E501"]
+
+[format]
+quote-style = "double"
